@@ -8,7 +8,7 @@ services:
     ports:
       - "80:8080"  # Redirige le port 80 du host vers le port 8080 du conteneur
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/stationSki?createDatabaseIfNotExist=true  # Ajout de createDatabaseIfNotExist
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/stationSki?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: # Laissez vide pour pas de mot de passe
     depends_on:
@@ -21,11 +21,10 @@ services:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: stationSki
-      MYSQL_USER: root
-      MYSQL_PASSWORD: # Laissez vide pour pas de mot de passe
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes  # Permet un mot de passe vide
+      MYSQL_ROOT_PASSWORD: # Définissez ici un mot de passe pour l'utilisateur root
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes # Si vous voulez laisser le mot de passe vide
     volumes:
-      - db_data:/var/lib/mysql  # Stockage persistant pour MySQL
+      - db_data:/var/lib/mysql
 
 volumes:
-  db_data:  # Déclaration du volume pour stocker les données de la base de données
+  db_data:
