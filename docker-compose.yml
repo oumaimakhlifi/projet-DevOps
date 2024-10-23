@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   app:
     build:
@@ -14,13 +16,14 @@ services:
 
   db:
     image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
     ports:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: stationSki
       MYSQL_USER: root
       MYSQL_PASSWORD: # Laissez vide pour pas de mot de passe
-      MYSQL_ROOT_PASSWORD: # Laissez vide pour pas de mot de passe
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes
     volumes:
       - db_data:/var/lib/mysql
 
