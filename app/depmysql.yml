@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: "stationSki"
+            - name: MYSQL_ROOT_PASSWORD
+              value: ""  # Définissez ici un mot de passe pour l'utilisateur root
+            - name: MYSQL_ALLOW_EMPTY_PASSWORD
+              value: "yes"  # Si vous voulez laisser le mot de passe vide
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: db-data
+          emptyDir: {}  # Utilisez un PersistentVolumeClaim pour les données persistantes dans un environnement de production
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: db

@@ -7,9 +7,9 @@ spec:
   project: default
   destination:
     namespace: default
-    server: https://192.168.49.2:8443  
+    server: https://kubernetes.default.svc
   source:
-    path: projet-devops-app  
+    path: .  # Indique la racine du dépôt
     repoURL: "https://github.com/oumaimakhlifi/projet-DevOps.git"
     targetRevision: HEAD
   syncPolicy:
