@@ -11,7 +11,7 @@ spec:
   source:
     path: .  # Indique la racine du dépôt
     repoURL: "https://github.com/oumaimakhlifi/projet-DevOps.git"
-    targetRevision: HEAD
+    targetRevision: oumaima  # Utilise la branche 'oumaima'
   syncPolicy:
     automated: {}
     syncOptions:
