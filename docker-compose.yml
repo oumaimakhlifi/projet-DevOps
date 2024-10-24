@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:8080"  # Redirige le port 80 du host vers le port 8080 du conteneur
+      - "80:8089"  # Redirige le port 80 du host vers le port 8080 du conteneur
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/stationSki?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
