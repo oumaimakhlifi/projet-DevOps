@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class SubscriptionServicesImplTest {
-    
+
     private ISubscriptionRepository subscriptionRepository;
     private SubscriptionServicesImpl subscriptionService;
 
