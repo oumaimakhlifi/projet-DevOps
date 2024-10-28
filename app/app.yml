@@ -9,7 +9,7 @@ spec:
     namespace: default
     server: https://kubernetes.default.svc
   source:
-    path: .  # Indique la racine du dépôt
+    path: app/  # Indique la racine du dépôt
     repoURL: "https://github.com/oumaimakhlifi/projet-DevOps.git"
     targetRevision: oumaima  # Utilise la branche 'oumaima'
   syncPolicy:
