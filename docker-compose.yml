@@ -13,7 +13,7 @@ services :
   app-station:
     depends_on:
       - mysqldb
-    image: rihemoueslati/imagetwo
+    image: rihemoueslati/imagefinal
     restart: on-failure
     ports:
       - 8089:8089
