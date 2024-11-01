@@ -60,6 +60,7 @@ public class PisteServicesImplTest {
         piste.setNumPiste(1L);
         piste.setNamePiste("Test Piste");
 
+        
         // Mock the behavior of the pisteRepository
         when(pisteRepository.save(any(Piste.class))).thenReturn(piste);
 
