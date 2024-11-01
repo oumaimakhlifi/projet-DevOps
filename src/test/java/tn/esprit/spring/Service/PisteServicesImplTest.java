@@ -2,6 +2,8 @@ package tn.esprit.spring.Service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import tn.esprit.spring.entities.Piste;
 import tn.esprit.spring.repositories.IPisteRepository;
 import tn.esprit.spring.services.PisteServicesImpl;
@@ -13,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
+@ExtendWith(MockitoExtension.class)
 public class PisteServicesImplTest {
 
     private IPisteRepository pisteRepository;
@@ -60,7 +62,7 @@ public class PisteServicesImplTest {
         piste.setNumPiste(1L);
         piste.setNamePiste("Test Piste");
 
-        
+
         // Mock the behavior of the pisteRepository
         when(pisteRepository.save(any(Piste.class))).thenReturn(piste);
 
