@@ -3,6 +3,8 @@ package tn.esprit.spring.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.spring.entities.Instructor;
 import tn.esprit.spring.entities.Registration;
@@ -48,5 +50,10 @@ public class RegistrationRestController {
     public List<Integer> numWeeksCourseOfInstructorBySupport(@PathVariable("numInstructor")Long numInstructor,
                                                                   @PathVariable("support") Support support) {
         return registrationServices.numWeeksCourseOfInstructorBySupport(numInstructor,support);
+    }
+    @PostMapping("/add")
+    public ResponseEntity<Registration> addRegistration(@RequestBody Registration registration) {
+        Registration savedRegistration = registrationServices.addRegistration(registration);
+        return new ResponseEntity<>(savedRegistration, HttpStatus.CREATED);
     }
 }
