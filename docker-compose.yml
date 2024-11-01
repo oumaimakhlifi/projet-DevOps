@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:8089"  # Redirige le port 80 du host vers le port 8080 du conteneur
+      - "80:8089"  # Redirige le port 80 du host vers le port 8089 du conteneur
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/stationSki?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
@@ -26,7 +26,12 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
-  
+  frontend:
+    image: oumaimakhelifi/stationski-app-frontend:${PROJECT_VERSION}  # Utiliser la version poussée par le pipeline
+    ports:
+      - "4200:80"  # Redirige le port 80 du host vers le port 80 du conteneur
+    depends_on:
+      - app  # Assure que le backend est démarré avant le frontend
 
 volumes:
   db_data:
