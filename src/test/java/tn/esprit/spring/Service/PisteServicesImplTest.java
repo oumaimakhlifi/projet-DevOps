@@ -15,27 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class PisteServicesImplTest {
-    @Test
-    public void testRetrieveAllPistes() {
-        // Création d'une instance de PisteServicesImpl sans mocking, pour un test unitaire simple
-        PisteServicesImpl pisteServices = new PisteServicesImpl(null); // null pour le repository
 
-        // Création d'une liste simulée de Pistes
-        List<Piste> pistes = new ArrayList<>();
-        Piste piste1 = new Piste();
-        piste1.setId(1L);
-        Piste piste2 = new Piste();
-        piste2.setId(2L);
-        pistes.add(piste1);
-        pistes.add(piste2);
-
-        // Méthode simulée qui retourne les pistes
-        List<Piste> result = pistes;
-
-        // Vérifications
-        assertNotNull(result); // Vérifie que la liste n'est pas null
-        assertEquals(2, result.size()); // Vérifie que la taille de la liste est 2
-    }
     private IPisteRepository pisteRepository;
     private PisteServicesImpl pisteService;
 
@@ -46,6 +26,31 @@ public class PisteServicesImplTest {
 
         // Initialize the PisteServicesImpl with the mock repository
         pisteService = new PisteServicesImpl(pisteRepository);
+    }
+
+    @Test
+    public void testRetrieveAllPistes() {
+        // Create a list of Pistes
+        List<Piste> pistes = new ArrayList<>();
+        Piste piste1 = new Piste();
+        piste1.setId(1L);
+        Piste piste2 = new Piste();
+        piste2.setId(2L);
+        pistes.add(piste1);
+        pistes.add(piste2);
+
+        // Mock the behavior of the repository
+        when(pisteRepository.findAll()).thenReturn(pistes);
+
+        // Act
+        List<Piste> result = pisteService.retrieveAllPistes();
+
+        // Verify that the result is not null and has the expected size
+        assertNotNull(result); // Check that the list is not null
+        assertEquals(2, result.size()); // Check that the list size is 2
+
+        // Verify the interaction with the repository
+        verify(pisteRepository, times(1)).findAll(); // Ensure findAll was called once
     }
 
     @Test
@@ -66,6 +71,18 @@ public class PisteServicesImplTest {
         assertEquals("Test Piste", result.getNamePiste());
 
         // Verify the interaction with the repository
-        verify(pisteRepository, times(1)).save(piste);  // Ensure save was called once
+        verify(pisteRepository, times(1)).save(piste); // Ensure save was called once
+    }
+
+    @Test
+    public void testRemovePiste() {
+        // Arrange
+        Long numPiste = 1L;
+
+        // Act
+        pisteService.removePiste(numPiste);
+
+        // Assert
+        verify(pisteRepository, times(1)).deleteById(numPiste); // Ensure deleteById was called once
     }
 }
