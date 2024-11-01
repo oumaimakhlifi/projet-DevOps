@@ -9,6 +9,9 @@ FROM openjdk:17-jdk-slim
 EXPOSE 8089
 COPY --from=build /app/target/gestion-station-ski-1.0.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 293b1e20b94a60f1f05d9e03b8b9612e46c2f9f8
