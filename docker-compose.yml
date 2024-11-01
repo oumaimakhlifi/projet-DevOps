@@ -38,10 +38,3 @@ volumes:
 networks:
   custom_network:
     driver: bridge
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> 293b1e20b94a60f1f05d9e03b8b9612e46c2f9f8
