@@ -1,9 +1,9 @@
 package tn.esprit.spring.Service;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.Test;
+import org.mockito.Mockito;
+import org.springframework.test.context.event.annotation.BeforeTestMethod;
+
 import tn.esprit.spring.entities.Piste;
 import tn.esprit.spring.repositories.IPisteRepository;
 import tn.esprit.spring.services.PisteServicesImpl;
@@ -15,17 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-@ExtendWith(MockitoExtension.class)
+
+
 public class PisteServicesImplTest {
 
     private IPisteRepository pisteRepository;
     private PisteServicesImpl pisteService;
 
-    @BeforeEach
+    @BeforeTestMethod
     public void setUp() {
         // Create a mock for the PisteRepository
-        pisteRepository = mock(IPisteRepository.class);
-
+        pisteRepository = Mockito.mock(IPisteRepository.class);
         // Initialize the PisteServicesImpl with the mock repository
         pisteService = new PisteServicesImpl(pisteRepository);
     }
@@ -47,45 +47,31 @@ public class PisteServicesImplTest {
         // Act
         List<Piste> result = pisteService.retrieveAllPistes();
 
-        // Verify that the result is not null and has the expected size
-        assertNotNull(result); // Check that the list is not null
-        assertEquals(2, result.size()); // Check that the list size is 2
-
-        // Verify the interaction with the repository
-        verify(pisteRepository, times(1)).findAll(); // Ensure findAll was called once
+        // Assert
+        assertNotNull(result);
+        assertEquals(result.size(), 2);
+        verify(pisteRepository, times(1)).findAll();
     }
 
     @Test
     public void testAddPiste() {
-        // Arrange
         Piste piste = new Piste();
         piste.setNumPiste(1L);
         piste.setNamePiste("Test Piste");
 
-
-        // Mock the behavior of the pisteRepository
         when(pisteRepository.save(any(Piste.class))).thenReturn(piste);
 
-        // Act
         Piste result = pisteService.addPiste(piste);
 
-        // Assert
         assertNotNull(result);
-        assertEquals("Test Piste", result.getNamePiste());
-
-        // Verify the interaction with the repository
-        verify(pisteRepository, times(1)).save(piste); // Ensure save was called once
+        assertEquals(result.getNamePiste(), "Test Piste");
+        verify(pisteRepository, times(1)).save(piste);
     }
 
     @Test
     public void testRemovePiste() {
-        // Arrange
         Long numPiste = 1L;
-
-        // Act
         pisteService.removePiste(numPiste);
-
-        // Assert
-        verify(pisteRepository, times(1)).deleteById(numPiste); // Ensure deleteById was called once
+        verify(pisteRepository, times(1)).deleteById(numPiste);
     }
 }
