@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: stationski-frontend
-          image: oumaimakhelifi/stationski-app-frontend:${PROJECT_VERSION}  # Utiliser la version poussée par le pipeline
+          image: oumaimakhelifi/stationski-app-frontend:latest  # Utiliser la version poussée par le pipeline
           ports:
             - containerPort: 80  # Port exposé à l'intérieur du conteneur
 ---
