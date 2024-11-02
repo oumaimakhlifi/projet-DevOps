@@ -27,7 +27,7 @@ services:
       - db_data:/var/lib/mysql
 
   frontend:
-    image: oumaimakhelifi/stationski-app-frontend:${PROJECT_VERSION}  # Utiliser la version poussée par le pipeline
+    image: oumaimakhelifi/stationski-app-frontend:latest  # Utiliser la version poussée par le pipeline
     ports:
       - "4200:80"  # Redirige le port 80 du host vers le port 80 du conteneur
     depends_on:
