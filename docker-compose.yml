@@ -6,11 +6,11 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "80:8089"  # Redirige le port 80 du host vers le port 8089 du conteneur
+      - "80:8089"  # Redirect host port 80 to container port 8089
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/stationSki?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: # Laissez vide pour pas de mot de passe
+      SPRING_DATASOURCE_PASSWORD: ""  # Leave empty for no password
     depends_on:
       - db
 
@@ -21,19 +21,17 @@ services:
       - "3306:3306"
     environment:
       MYSQL_DATABASE: stationSki
-      MYSQL_ROOT_PASSWORD: # Définissez ici un mot de passe pour l'utilisateur root
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes # Si vous voulez laisser le mot de passe vide
+      MYSQL_ROOT_PASSWORD: ""  # Set here a password for the root user
+      MYSQL_ALLOW_EMPTY_PASSWORD: yes  # If you want to leave the password empty
     volumes:
       - db_data:/var/lib/mysql
 
   frontend:
-    image: oumaimakhelifi/stationski-app-frontend:latest  # Utiliser la version poussée par le pipeline
+    image: oumaimakhelifi/stationski-app-frontend:latest  # Use the version pushed by the pipeline
     ports:
-      - "4200:80"  # Redirige le port 80 du host vers le port 80 du conteneur
+      - "4200:80"  # Redirect host port 4200 to container port 80
     depends_on:
-      - app  # Assure que le backend est démarré avant le frontend
-
-  
+      - app  # Ensure the backend starts before the frontend
 
 volumes:
   db_data:
