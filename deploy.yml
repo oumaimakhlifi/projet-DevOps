@@ -1,47 +1,7 @@
 ---
-- name: Deploy application using Ansible
-  hosts: target_servers  # This references the [target_servers] group in the inventory
-  become: yes            # Elevate privileges if needed (e.g., for installing packages)
-
+- name: Simple connectivity test
+  hosts: web
+  gather_facts: no
   tasks:
-
-    - name: Ensure Docker is installed
-      apt:
-        name: docker.io
-        state: present
-      when: ansible_os_family == "Debian"
-
-    - name: Ensure Docker Compose is installed
-      get_url:
-        url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
-        dest: /usr/local/bin/docker-compose
-        mode: '0755'
-      when: ansible_os_family == "Debian"
-
-    - name: Copy Docker Compose file
-      copy:
-        src: ../docker-compose.yml    # Adjust path if needed
-        dest: /path/on/target/docker-compose.yml
-
-    - name: Start application with Docker Compose
-      command: docker-compose -f /path/on/target/docker-compose.yml up -d
-      args:
-        chdir: /path/on/target
-
-    - name: Restart Prometheus
-      command: docker restart prometheus
-      ignore_errors: yes
-
-    - name: Restart Grafana
-      command: docker restart grafana
-      ignore_errors: yes
-
-    - name: Check status of services
-      shell: docker ps | grep "service_name"
-      register: service_status
-      failed_when: service_status.rc != 0
-      changed_when: false
-
-    - name: Print service status
-      debug:
-        msg: "Service status: {{ service_status.stdout }}"
+    - name: Ping the target machine
+      ping:
