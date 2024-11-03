@@ -26,12 +26,5 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
-  frontend:
-    image: oumaimakhelifi/stationski-app-frontend:latest  # Use the version pushed by the pipeline
-    ports:
-      - "4200:4200"  # Redirect host port 4200 to container port 80
-    depends_on:
-      - app  # Ensure the backend starts before the frontend
-
 volumes:
   db_data:
