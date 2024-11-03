@@ -33,5 +33,16 @@ services:
     depends_on:
       - app  # Assure que le backend est démarré avant le frontend
 
+  sonarqube:
+    image: sonarqube
+    ports:
+      - "9000:9000"  # Accès à SonarQube sur le port 9000
+    restart: always  # Redémarre automatiquement si le conteneur échoue
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
 volumes:
   db_data:
+  sonarqube_data:
+  sonarqube_extensions:
