@@ -1,4 +1,4 @@
-# Étape 1 : Construction de l'application :
+# Étape 1 : Construction de l'application
 FROM maven:3.8.4-openjdk-17 AS build
 WORKDIR /app
 
