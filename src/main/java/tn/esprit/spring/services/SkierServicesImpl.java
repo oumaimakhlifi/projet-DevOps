@@ -46,6 +46,11 @@ public class SkierServicesImpl implements ISkierServices {
     }
 
     @Override
+    public Skier updateSkier(Skier skier) {
+        return skierRepository.save(skier);
+    }
+
+    @Override
     public Skier assignSkierToSubscription(Long numSkier, Long numSubscription) {
         Skier skier = skierRepository.findById(numSkier).orElse(null);
         Subscription subscription = subscriptionRepository.findById(numSubscription).orElse(null);
