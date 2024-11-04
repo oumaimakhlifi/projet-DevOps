@@ -25,23 +25,9 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: yes  # Allow empty password if desired
     volumes:
       - db_data:/var/lib/mysql  # Volume for persistent MySQL data
-    networks:
-      - monitoring_network
 
-  prometheus:
-    image: prom/prometheus
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml  # Your Prometheus config file
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
-    ports:
-      - "9091:9090"  # Expose Prometheus on host port 9090
-    networks:
-      - monitoring_network
 
 volumes:
   db_data:  # Named volume for MySQL
-networks:
-  monitoring_network:
-    driver: bridge
+
 
