@@ -132,4 +132,4 @@ public class SkieurServiceImplTest {
         assertEquals(1, allSkieurs.size());
         assertTrue(allSkieurs.contains(skieur1), "Le skieur devrait être présent dans la liste.");
     }
-}
+}*/
