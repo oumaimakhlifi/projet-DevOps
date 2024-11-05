@@ -6,8 +6,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import tn.esprit.spring.entities.Skier;
+import tn.esprit.spring.entities.Subscription;
+import tn.esprit.spring.entities.TypeSubscription;
 import tn.esprit.spring.repositories.ISkierRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +51,16 @@ public class SkierServiceImplTest {
         skier2.setFirstName("skieur2firstname");
         skier2.setLastName("skieur2lastname");
         skier2.setCity("Alger");
+
+        // Initialize Subscription for skier1 to avoid NullPointerException
+        Subscription subscription = new Subscription();
+        subscription.setNumSub(1L); // Set a unique ID, assuming this is acceptable for testing purposes
+        subscription.setStartDate(LocalDate.now()); // Set start date to the current date
+        subscription.setEndDate(LocalDate.now().plusMonths(6)); // Set end date to 6 months from now
+        subscription.setPrice(100.0f); // Set a sample price
+        subscription.setTypeSub(TypeSubscription.ANNUAL); // Set to a specific subscription type (adjust as needed)
+        skier1.setSubscription(subscription); // Assign to skier1
+        skier2.setSubscription(subscription); // Assign to skier2
     }
 
     // Test for adding a Skieur (Create)
@@ -66,7 +79,7 @@ public class SkierServiceImplTest {
         // Assertions pour vérifier que le cours a été ajouté correctement
         assertNotNull(addedSkier, "Le skieur ajouté ne doit pas être null");
         assertEquals(skier1.getNumSkier(), addedSkier.getNumSkier(), "Le numéro du skieur ajouté est incorrect");
-        assertEquals(1, addedSkier.getNumSkier(), "L'ID du skieur ajouté doit être 1");
+        assertEquals(1L, addedSkier.getNumSkier(), "L'ID du skieur ajouté doit être 1");
         verify(skierRepository, times(1)).save(skier1); // Vérifie que save a été appelé une fois
     }
 
@@ -115,7 +128,8 @@ public class SkierServiceImplTest {
 
         skierService.removeSkier(skierId);
 
-        verify(skierRepository, times(1)).delete(skier1);
+        verify(skierRepository, times(1)).deleteById(skierId);
+
     }
 
     // Test for retrieving all skieurs
