@@ -69,7 +69,7 @@ public class SkierServiceImplTest {
         // Simuler le comportement de save avec Mockito
         when(skierRepository.save(any(Skier.class))).thenAnswer(invocation -> {
             Skier savedSkier = invocation.getArgument(0);
-            savedSkier.setNumSkier(1L); // Simule un ID auto-généré
+            savedSkier.setNumSkier(1L);
             return savedSkier;
         });
 
