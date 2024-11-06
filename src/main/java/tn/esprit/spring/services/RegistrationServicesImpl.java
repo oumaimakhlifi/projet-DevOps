@@ -107,5 +107,10 @@ public class RegistrationServicesImpl implements  IRegistrationServices{
     public Registration addRegistration(Registration registration) {
         return registrationRepository.save(registration);
     }
+     @Override
+    public Registration getRegistrationById(Long id) {
+        return registrationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Registration not found with ID: " + id));
+    }
 
 }
