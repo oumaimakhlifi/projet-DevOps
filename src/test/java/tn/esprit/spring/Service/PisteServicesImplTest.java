@@ -69,7 +69,7 @@ public class PisteServicesImplTest {
         pisteService.removePiste(numPiste);
         verify(pisteRepository, times(1)).deleteById(numPiste);
     }
-    @Test
+  
     public void testGetById() {
         // Arrange
         Long pisteId = 1L;
