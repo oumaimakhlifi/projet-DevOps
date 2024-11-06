@@ -13,12 +13,13 @@ public class PisteServicesImplTest {
     private IPisteRepository pisteRepository;
     private PisteServicesImpl pisteService;
 
-    public static void main(String[] args) {
+public static void main(String[] args) {
         PisteServicesImplTest test = new PisteServicesImplTest();
         test.setUp();
         test.testRetrieveAllPistes();
         test.testAddPiste();
         test.testRemovePiste();
+        test.testGetPisteById();
     }
 
     public void setUp() {
@@ -69,21 +70,25 @@ public class PisteServicesImplTest {
         pisteService.removePiste(numPiste);
         verify(pisteRepository, times(1)).deleteById(numPiste);
     }
-  
-    public void testGetById() {
-        // Arrange
-        Long pisteId = 1L;
-        Piste mockPiste = new Piste();
-        mockPiste.setId(pisteId);
-        mockPiste.setNamePiste("Test Piste");
 
-        when(pisteService.retrievePiste(pisteId)).thenReturn(mockPiste);
+    public void testGetPisteById() {
+        Long numPiste = 1L;
+        Piste mockPiste = new Piste();
+        mockPiste.setId(numPiste);
+        mockPiste.setNamePiste("Mock Piste");
+
+        // Mock the behavior of the repository
+        when(pisteRepository.findById(numPiste)).thenReturn(java.util.Optional.of(mockPiste));
 
         // Act
-        Piste result = pisteController.getById(pisteId);
+        Piste result = pisteService.retrievePiste(numPiste);
 
         // Assert
-        assertEquals(mockPiste, result, "The retrieved Piste should match the mock Piste");
-        verify(pisteService, times(1)).retrievePiste(pisteId);
+        assert result != null : "Result should not be null";
+        assert result.getId().equals(numPiste) : "Piste ID should match the requested ID";
+        assert "Mock Piste".equals(result.getNamePiste()) : "Piste name should be 'Mock Piste'";
+        verify(pisteRepository, times(1)).findById(numPiste);
     }
+  
+    
 }
