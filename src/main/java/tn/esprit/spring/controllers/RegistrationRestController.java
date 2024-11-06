@@ -56,4 +56,11 @@ public class RegistrationRestController {
         Registration savedRegistration = registrationServices.addRegistration(registration);
         return new ResponseEntity<>(savedRegistration, HttpStatus.CREATED);
     }
+    @Operation(description = "Retrieve Registration by ID")
+@GetMapping("/{id}")
+public ResponseEntity<Registration> getRegistrationById(@PathVariable Long id) {
+    Registration registration = registrationServices.getRegistrationById(id);
+    return new ResponseEntity<>(registration, HttpStatus.OK);
+}
+
 }
