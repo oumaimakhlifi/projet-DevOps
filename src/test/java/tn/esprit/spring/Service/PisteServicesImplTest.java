@@ -5,6 +5,7 @@ import tn.esprit.spring.services.PisteServicesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
@@ -13,7 +14,7 @@ public class PisteServicesImplTest {
     private IPisteRepository pisteRepository;
     private PisteServicesImpl pisteService;
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
         PisteServicesImplTest test = new PisteServicesImplTest();
         test.setUp();
         test.testRetrieveAllPistes();
@@ -78,7 +79,7 @@ public static void main(String[] args) {
         mockPiste.setNamePiste("Mock Piste");
 
         // Mock the behavior of the repository
-        when(pisteRepository.findById(numPiste)).thenReturn(java.util.Optional.of(mockPiste));
+        when(pisteRepository.findById(numPiste)).thenReturn(Optional.of(mockPiste));
 
         // Act
         Piste result = pisteService.retrievePiste(numPiste);
@@ -89,6 +90,4 @@ public static void main(String[] args) {
         assert "Mock Piste".equals(result.getNamePiste()) : "Piste name should be 'Mock Piste'";
         verify(pisteRepository, times(1)).findById(numPiste);
     }
-  
-    
 }
