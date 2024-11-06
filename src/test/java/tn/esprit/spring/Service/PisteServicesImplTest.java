@@ -69,4 +69,21 @@ public class PisteServicesImplTest {
         pisteService.removePiste(numPiste);
         verify(pisteRepository, times(1)).deleteById(numPiste);
     }
+    @Test
+    public void testGetById() {
+        // Arrange
+        Long pisteId = 1L;
+        Piste mockPiste = new Piste();
+        mockPiste.setId(pisteId);
+        mockPiste.setNamePiste("Test Piste");
+
+        when(pisteService.retrievePiste(pisteId)).thenReturn(mockPiste);
+
+        // Act
+        Piste result = pisteController.getById(pisteId);
+
+        // Assert
+        assertEquals(mockPiste, result, "The retrieved Piste should match the mock Piste");
+        verify(pisteService, times(1)).retrievePiste(pisteId);
+    }
 }
