@@ -44,9 +44,11 @@ public class PisteServicesImplTest {
         // Act
         List<Piste> result = pisteService.retrieveAllPistes();
 
-        // Assert using Mockito
+        // Assert using simple assertions
         assert result != null : "Result should not be null";
         assert result.size() == 2 : "Result size should be 2";
+        assert result.get(0).getId() == 1L : "First piste ID should be 1";
+        assert result.get(1).getId() == 2L : "Second piste ID should be 2";
         verify(pisteRepository, times(1)).findAll();
     }
 
@@ -57,8 +59,10 @@ public class PisteServicesImplTest {
 
         when(pisteRepository.save(any(Piste.class))).thenReturn(piste);
 
+        // Act
         Piste result = pisteService.addPiste(piste);
 
+        // Assert using simple assertions
         assert result != null : "Result should not be null";
         assert "Test Piste".equals(result.getNamePiste()) : "Piste name should be 'Test Piste'";
         verify(pisteRepository, times(1)).save(piste);
@@ -66,7 +70,11 @@ public class PisteServicesImplTest {
 
     public void testRemovePiste() {
         Long numPiste = 1L;
+
+        // Act
         pisteService.removePiste(numPiste);
+
+        // Assert
         verify(pisteRepository, times(1)).deleteById(numPiste);
     }
 }
