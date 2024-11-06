@@ -1,5 +1,7 @@
 package tn.esprit.spring.Service;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import tn.esprit.spring.entities.Piste;
 import tn.esprit.spring.repositories.IPisteRepository;
@@ -9,20 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class PisteServicesImplTest {
 
     private IPisteRepository pisteRepository;
     private PisteServicesImpl pisteService;
 
-    public static void main(String[] args) {
-        PisteServicesImplTest test = new PisteServicesImplTest();
-        test.setUp();
-        test.testRetrieveAllPistes();
-        test.testAddPiste();
-        test.testRemovePiste();
-    }
-
+    @BeforeEach
     public void setUp() {
         // Create a mock for the PisteRepository
         pisteRepository = Mockito.mock(IPisteRepository.class);
@@ -30,6 +26,7 @@ public class PisteServicesImplTest {
         pisteService = new PisteServicesImpl(pisteRepository);
     }
 
+    @Test
     public void testRetrieveAllPistes() {
         // Create a list of Pistes
         List<Piste> pistes = new ArrayList<>();
@@ -46,12 +43,13 @@ public class PisteServicesImplTest {
         // Act
         List<Piste> result = pisteService.retrieveAllPistes();
 
-        // Assert using Mockito
-        assert result != null : "Result should not be null";
-        assert result.size() == 2 : "Result size should be 2";
+        // Assert
+        assertNotNull(result, "Result should not be null");
+        assertEquals(2, result.size(), "Result size should be 2");
         verify(pisteRepository, times(1)).findAll();
     }
 
+    @Test
     public void testAddPiste() {
         Piste piste = new Piste();
         piste.setNumPiste(1L);
@@ -61,11 +59,12 @@ public class PisteServicesImplTest {
 
         Piste result = pisteService.addPiste(piste);
 
-        assert result != null : "Result should not be null";
-        assert "Test Piste".equals(result.getNamePiste()) : "Piste name should be 'Test Piste'";
+        assertNotNull(result, "Result should not be null");
+        assertEquals("Test Piste", result.getNamePiste(), "Piste name should be 'Test Piste'");
         verify(pisteRepository, times(1)).save(piste);
     }
 
+    @Test
     public void testRemovePiste() {
         Long numPiste = 1L;
         pisteService.removePiste(numPiste);
